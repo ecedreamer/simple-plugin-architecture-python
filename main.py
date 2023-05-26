@@ -3,10 +3,13 @@ from plugin_core.plugin_interface import PluginInterface
 
 
 def process_data(processor_class: type, *args, **kwargs):
-    processor: PluginInterface = processor_class()
-    result = processor.run(*args, **kwargs)
-    result["status"] = "success"
-    return result
+    if processor_class:
+        processor: PluginInterface = processor_class()
+        result = processor.run(*args, **kwargs)
+        result["status"] = "success"
+        return result
+    else:
+        return {"status": "failure"}
 
 
 def main() -> None:
